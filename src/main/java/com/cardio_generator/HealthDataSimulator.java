@@ -25,6 +25,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 
+/**
+ * Simulates health data for a configurable number of patients and outputs the data
+ * through multiple strategies including console, file, WebSocket, and TCP.
+ * It can be run and configured directly through the command line.
+ * */
 public class HealthDataSimulator {
 
     private static int patientCount = 50; // Default number of patients
@@ -32,6 +37,13 @@ public class HealthDataSimulator {
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
 
+/**
+ * Main method to run the simulator with command-line arguments to configure patient
+ * count and output strategy.
+ *
+ * @param args Command-line used to customize the execution
+ * @throws IOException if there is an error creating directories for file outputs.
+ */
     public static void main(String[] args) throws IOException {
 
         parseArguments(args);
@@ -44,6 +56,12 @@ public class HealthDataSimulator {
         scheduleTasksForPatients(patientIds);
     }
 
+    /**
+     * Parses command-line arguments to set simulation parameters like patient count and output strategy.
+     *
+     * @param args Command-line arguments provided at runtime.
+     * @throws IOException if an output directory needs to be created but fails.
+     */
     private static void parseArguments(String[] args) throws IOException {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
@@ -104,7 +122,9 @@ public class HealthDataSimulator {
             }
         }
     }
-
+/**
+ * Prints help information. Details usage and Command-line options.
+ */
     private static void printHelp() {
         System.out.println("Usage: java HealthDataSimulator [options]");
         System.out.println("Options:");
@@ -121,7 +141,11 @@ public class HealthDataSimulator {
         System.out.println(
                 "  This command simulates data for 100 patients and sends the output to WebSocket clients connected to port 8080.");
     }
-
+/**
+ * Initializes a list of unique patient IDs for simulation.
+ *
+ * @param patientCount The integer number of patients to generate IDs for.
+ * @return A list of integer IDs for each patient.*/
     private static List<Integer> initializePatientIds(int patientCount) {
         List<Integer> patientIds = new ArrayList<>();
         for (int i = 1; i <= patientCount; i++) {
@@ -130,6 +154,11 @@ public class HealthDataSimulator {
         return patientIds;
     }
 
+    /**
+     * Schedules tasks for generating health data for each patient.
+     *
+     * @param patientIds List of integer patient IDs for which data will be generated.
+     */
     private static void scheduleTasksForPatients(List<Integer> patientIds) {
         ECGDataGenerator ecgDataGenerator = new ECGDataGenerator(patientCount);
         BloodSaturationDataGenerator bloodSaturationDataGenerator = new BloodSaturationDataGenerator(patientCount);
