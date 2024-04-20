@@ -6,12 +6,19 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.Executors;
 
+/**
+ * Implementation of the OutputStrategy interface for TCP output.
+ */
 public class TcpOutputStrategy implements OutputStrategy {
 
     private ServerSocket serverSocket;
     private Socket clientSocket;
     private PrintWriter out;
 
+    /**
+     * Constructs a TCP output strategy with the specified port.
+     * @param port      An integer specifying the port number on which the TCP server will listen.
+     */
     public TcpOutputStrategy(int port) {
         try {
             serverSocket = new ServerSocket(port);
@@ -32,6 +39,13 @@ public class TcpOutputStrategy implements OutputStrategy {
         }
     }
 
+    /**
+     * Outputs patient data over TCP connection.
+     * @param patientId     An integer representation of a patient's ID.
+     * @param timestamp     A long representation of the timestamp.
+     * @param label         A string representation of a label of the data.
+     * @param data          A string representation of the data to be outputted.
+     */
     @Override
     public void output(int patientId, long timestamp, String label, String data) {
         if (out != null) {

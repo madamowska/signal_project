@@ -1,19 +1,34 @@
 package com.cardio_generator.generators;
 
 import java.util.Random;
-
 import com.cardio_generator.outputs.OutputStrategy;
 
+/**
+ * Implementation of PatientDataGenerator for Alert Generator
+ */
 public class AlertGenerator implements PatientDataGenerator {
     // Changed variable name to UPPER_SNAKE_CASE
     public static final Random RANDOM_GENERATOR = new Random();
     // Changed variable name to lowerCamelCase
     private boolean[] alertStates; // false = resolved, true = pressed
 
+    /**
+     * Constructs an Allert Generator with a specific number of patients.
+     * @param patientCount The number of patients for which alert states are measured.
+     */
     public AlertGenerator(int patientCount) {
         alertStates = new boolean[patientCount + 1];
     }
 
+    /**
+     * Generates alert data for a particular patient and outputs it using a provided output strategy.
+     *  Checks if the patient has an active alert at the moment.
+     *  If an alert is active, there is a 90% chance that the alert will be resolved.
+     *  If no alert is active, the  probability of a new alert being triggered is calculated
+     *  (based on an average rate lambda).
+     * @param patientId      An integer representation of a patient's ID.
+     * @param outputStrategy An object of type OutputStrategy that specifies the strategy used in generation.
+     */
     @Override
     public void generate(int patientId, OutputStrategy outputStrategy) {
         try {
