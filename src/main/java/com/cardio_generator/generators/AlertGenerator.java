@@ -22,6 +22,10 @@ public class AlertGenerator implements PatientDataGenerator {
 
     /**
      * Generates alert data for a particular patient and outputs it using a provided output strategy.
+     *  Checks if the patient has an active alert at the moment.
+     *  If an alert is active, there is a 90% chance that the alert will be resolved.
+     *  If no alert is active, the  probability of a new alert being triggered is calculated
+     *  (based on an average rate lambda).
      * @param patientId      An integer representation of a patient's ID.
      * @param outputStrategy An object of type OutputStrategy that specifies the strategy used in generation.
      */
