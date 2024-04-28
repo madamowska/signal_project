@@ -67,3 +67,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Project Members
 - Student ID: i6350796
 - Student ID: i6348466
+
+## UML diagrams
+A new directory called uml_models was added. It contains class digrams of four systems, including a description of each. Moreover it contains state and sequence diagrams of the alert system.
+Link to the directory: https://github.com/madamowska/signal_project/tree/7f7ea9cefb1657d6c520cc10c387710b683d3d62/uml_models 
