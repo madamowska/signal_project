@@ -2,6 +2,12 @@ package com.alerts;
 
 import com.data_management.DataStorage;
 import com.data_management.Patient;
+import com.data_management.PatientRecord;
+
+
+import java.util.List;
+
+
 
 /**
  * The {@code AlertGenerator} class is responsible for monitoring patient data
@@ -11,6 +17,7 @@ import com.data_management.Patient;
  */
 public class AlertGenerator {
     private DataStorage dataStorage;
+    private List<AlertService> alertServices;
 
     /**
      * Constructs an {@code AlertGenerator} with a specified {@code DataStorage}.
@@ -22,6 +29,12 @@ public class AlertGenerator {
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
+        alertServices.add(new BloodOxygenAlertService());
+        alertServices.add(new CombinedAlertService());
+        alertServices.add(new DiastolicBPAlertService());
+        alertServices.add(new SystolicBPAlertService());
+        alertServices.add(new HeartRateAlertService());
+
     }
 
     /**
@@ -36,6 +49,17 @@ public class AlertGenerator {
      */
     public void evaluateData(Patient patient) {
         // Implementation goes here
+        List<PatientRecord> records = patient.getRecords();
+
+        if (records == null || records.isEmpty()) {
+            System.out.println("No records available to evaluate for patient ID: " + patient.getId());
+            return;
+        }
+
+        for (AlertService service : alertServices) {
+            service.checkAndTriggerAlerts(records, this);
+        }
+
     }
 
     /**
@@ -46,7 +70,13 @@ public class AlertGenerator {
      *
      * @param alert the alert object containing details about the alert condition
      */
-    private void triggerAlert(Alert alert) {
+    void triggerAlert(Alert alert) {
         // Implementation might involve logging the alert or notifying staff
+        Patient patient = new Patient(Integer.parseInt(alert.getPatientId()));
+        //measurment value 1 - boolean - alert was triggerer
+        patient.addRecord(1, "Alert", alert.getTimestamp());
+        System.out.println(alert.toString());
     }
+
 }
+

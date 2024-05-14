@@ -41,6 +41,16 @@ public class Patient {
     }
 
     /**
+     * Returns the patient ID associated with this record.
+     *
+     * @return the patient ID
+     */
+    public int getId() {
+        return patientId;
+    }
+
+
+    /**
      * Retrieves a list of PatientRecord objects for this patient that fall within a
      * specified time range.
      * The method filters records based on the start and end times provided.
@@ -51,7 +61,7 @@ public class Patient {
      * @return a list of PatientRecord objects that fall within the specified time
      *         range
      */
-    public List<PatientRecord> getRecords(long startTime, long endTime) {
+    //public List<PatientRecord> getRecords(long startTime, long endTime) {
         // TODO Implement and test this method
-    }
+    //}
 }
