@@ -49,7 +49,9 @@ public class AlertGenerator {
      */
     public void evaluateData(Patient patient) {
         // Implementation goes here
-        List<PatientRecord> records = patient.getRecords();
+        long startTime = System.currentTimeMillis() - 86400000; // 24 hours ago
+        long endTime = System.currentTimeMillis(); // current time
+        List<PatientRecord> records = patient.getRecords(startTime, endTime);
 
         if (records == null || records.isEmpty()) {
             System.out.println("No records available to evaluate for patient ID: " + patient.getId());
