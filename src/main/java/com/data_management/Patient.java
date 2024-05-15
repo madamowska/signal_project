@@ -66,7 +66,7 @@ public class Patient {
         List<PatientRecord> result = new ArrayList<>();
         for(PatientRecord record : this.patientRecords){
             long time = record.getTimestamp();
-            if(time > startTime && time < endTime){
+            if(time >= startTime && time <= endTime){
                 result.add(record);
             }
         }

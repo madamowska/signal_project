@@ -10,6 +10,15 @@ public class OutputFileDataReader implements DataReader{
     public OutputFileDataReader(String outputDir){
         this.outputDir = outputDir;
     }
+
+    /**
+     * Reads data from a specified source directory,
+     * processes it to remove white spaces, commas, colons
+     * and stores the data correspondingly in the data storage object.
+     *
+     * @param dataStorage the storage where data will be stored
+     * @throws IOException
+     */
     @Override
     public void readData (DataStorage dataStorage) throws IOException{
         File directory = new File(outputDir);
