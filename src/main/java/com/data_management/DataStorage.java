@@ -84,13 +84,11 @@ public class DataStorage {
      * @param args command line arguments
      */
     public static void main(String[] args) throws IOException {
-        // DataReader is not defined in this scope, should be initialized appropriately.
-        DataReader reader = new OutputFileDataReader("/Users/martaadamowska/signal_project/output");
+        DataReader reader = new OutputFileDataReader("/Users/martaadamowska/signal_project/test");
         DataStorage storage = new DataStorage();
 
-        // Assuming the reader has been properly initialized and can read data into the storage
         reader.readData(storage);
-
+        System.out.println(storage.getRecords(1, 1700000000000L, 1800000000000L).get(0).getMeasurementValue());
         // Example of using DataStorage to retrieve and print records for a patient
         List<PatientRecord> records = storage.getRecords(1, 1700000000000L, 1800000000000L);
         for (PatientRecord record : records) {
@@ -101,11 +99,11 @@ public class DataStorage {
         }
 
         // Initialize the AlertGenerator with the storage
-        AlertGenerator alertGenerator = new AlertGenerator(storage);
+        //AlertGenerator alertGenerator = new AlertGenerator(storage);
 
         // Evaluate all patients' data to check for conditions that may trigger alerts
-        for (Patient patient : storage.getAllPatients()) {
-            alertGenerator.evaluateData(patient);
-        }
+        //for (Patient patient : storage.getAllPatients()) {
+          //  alertGenerator.evaluateData(patient);
+        //}
     }
 }

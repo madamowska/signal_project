@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class OutputFileDataReader implements DataReader{
     private String outputDir;
@@ -20,12 +21,13 @@ public class OutputFileDataReader implements DataReader{
      * @throws IOException
      */
     @Override
-    public void readData (DataStorage dataStorage) throws IOException{
+    public void readData (DataStorage dataStorage) throws IOException {
         File directory = new File(outputDir);
         File[] files = directory.listFiles();
-        if(files != null){
-            for(File file : files){
-                if(file.isFile()){
+        if (files != null) {
+            for (File file : files) {
+                if (file.isFile()) {
+                    System.out.println(file);
                     try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
                         String line;
                         while ((line = reader.readLine()) != null) {
@@ -35,7 +37,7 @@ public class OutputFileDataReader implements DataReader{
                             double measurementValue = 0.0;
                             String recordType = "";
 
-                            for(String word : line_){
+                            for (String word : line_) {
                                 // remove whitespaces
                                 word = word.trim();
                                 String[] keyValue = word.split(":");
@@ -53,48 +55,52 @@ public class OutputFileDataReader implements DataReader{
                                             recordType = value;
                                             break;
                                         case "Data":
-                                            try {
-                                                measurementValue = Double.parseDouble(value);
+                                            // %
+                                            // for percentage values we convert the value to a double representing it
+                                            if (value.charAt(value.length() - 1) == '%') {
+                                                value = value.replace("%", "");
+                                                measurementValue = Double.parseDouble(value) / 100;
                                             }
-                                            catch (NumberFormatException e) {
-                                                // %
-                                                // for percentage values we convert the value to a double representing it
-                                                if (value.charAt(value.length() - 1) == '%') {
-                                                    value = value.replace("%", "");
-                                                    measurementValue = Double.parseDouble(value) / 100;
-                                                }
 
-                                                // triggered
-                                                // for triggered we set measurementValue to 1, and to 0 other ways
-                                                if (value.equals("triggered")) {
-                                                    measurementValue = 1;
-                                                } else {
-                                                    measurementValue = 0;
-                                                }
-                                                //System.err.println("Input is not a valid number: " + value);                                            }
+                                            // triggered
+                                            // for triggered we set measurementValue to 1, and to 0 other ways
+                                            else if (value.equals("triggered")) {
+                                                measurementValue = 1;
                                             }
+
+                                            else if (value.equals("not triggered")){
+                                                measurementValue = 0;
+                                            }
+
+                                            else measurementValue = Double.parseDouble(value);
                                             break;
                                         default:
                                             break;
                                     }
                                 }
                             }
-                            //System.out.println(patientId + measurementValue + recordType + timestamp);
                             dataStorage.addPatientData(patientId,measurementValue,recordType,timestamp);
+                            //System.out.println(patientId + " " + measurementValue + " " + recordType + " " + timestamp);
                         }
-                    }
-                    catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
             }
         }
     }
 
+
     public static void main(String[] args) throws IOException {
-        String diretory = "/Users/martaadamowska/signal_project/output";
+        String diretory = "/Users/martaadamowska/signal_project/test";
         OutputFileDataReader outputFileDataReader = new OutputFileDataReader(diretory);
         DataStorage dataStorage = new DataStorage();
         outputFileDataReader.readData(dataStorage);
+        List<PatientRecord> records = dataStorage.getRecords(2, 1700000000000L, 1800000000000L);
+        for (PatientRecord record : records) {
+            System.out.println("Record for Patient ID: " + record.getPatientId() +
+                    ", Type: " + record.getRecordType() +
+                    ", Data: " + record.getMeasurementValue() +
+                    ", Timestamp: " + record.getTimestamp());
+        }
     }
+
 }
