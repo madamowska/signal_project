@@ -25,16 +25,16 @@ class DataReaderTest {
         }
 
         // Check if the label is read correctly
-        assertEquals("Cholesterol", storage.getRecords(1,1713620522826L,1713620526870L).get(0).getRecordType());
-        assertEquals("Alert", storage.getRecords(1,1713620522826L,1713620526870L).get(1).getRecordType());
-        assertEquals("Alert", storage.getRecords(2,1713620522826L,1713620526870L).get(1).getRecordType());
-        assertEquals("Saturation", storage.getRecords(2,1713620522826L,1713620526870L).get(0).getRecordType());
+        assertEquals("Cholesterol", storage.getRecords(1,1700000000000L, 1800000000000L).get(0).getRecordType());
+        assertEquals("Alert", storage.getRecords(1,1700000000000L, 1800000000000L).get(1).getRecordType());
+        assertEquals("Alert", storage.getRecords(2,1700000000000L, 1800000000000L).get(1).getRecordType());
+        assertEquals("Saturation", storage.getRecords(2,1700000000000L, 1800000000000L).get(0).getRecordType());
 
         // Check if the triggered measurement is read correctly
-        assertEquals(1, storage.getAllPatients().get(1).getRecords(1713620522826L,1713620526870L).get(1).getMeasurementValue());
+        assertEquals(1, storage.getAllPatients().get(1).getRecords(1700000000000L, 1800000000000L).get(1).getMeasurementValue());
 
         // Check if the percentage measurement is read correctly
-        assertEquals(0.391, storage.getAllPatients().get(1).getRecords(1713620522826L,1713620526870L).get(0).getMeasurementValue());
+        assertEquals(0.391, storage.getAllPatients().get(1).getRecords(1700000000000L, 1800000000000L).get(0).getMeasurementValue());
     }
 
     @Test
