@@ -5,6 +5,7 @@ import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +17,7 @@ import java.util.List;
  * it against specific health criteria.
  */
 public class AlertGenerator {
-    private DataStorage dataStorage;
+    protected DataStorage dataStorage;
     private List<AlertService> alertServices;
 
     /**
@@ -29,6 +30,7 @@ public class AlertGenerator {
      */
     public AlertGenerator(DataStorage dataStorage) {
         this.dataStorage = dataStorage;
+        this.alertServices = new ArrayList<>();
         alertServices.add(new BloodOxygenAlertService());
         alertServices.add(new CombinedAlertService());
         alertServices.add(new DiastolicBPAlertService());
@@ -75,7 +77,7 @@ public class AlertGenerator {
     void triggerAlert(Alert alert) {
         // Implementation might involve logging the alert or notifying staff
         Patient patient = new Patient(Integer.parseInt(alert.getPatientId()));
-        //measurment value 1 - boolean - alert was triggerer
+        //measurement value 1 - boolean - alert was triggered
         patient.addRecord(1, "Alert", alert.getTimestamp());
         System.out.println(alert.toString());
     }

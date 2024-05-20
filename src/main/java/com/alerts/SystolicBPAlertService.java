@@ -19,12 +19,17 @@ public class SystolicBPAlertService implements AlertService{
 
                 // Check for critical thresholds
                 if (systolicCurrent > 180 || systolicCurrent < 90) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Critical systolic blood pressure level detected: " + systolicCurrent + " mmHg", current.getTimestamp()));
+                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()),
+                            "Critical systolic blood pressure level detected: " + systolicCurrent + " mmHg",
+                            current.getTimestamp()));
                 }
 
                 // Check for trends
-                if (Math.abs(systolicCurrent - systolicPrev) > 10 && Math.abs(systolicPrev - systolicPrevPrev) > 10) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Consistent systolic blood pressure trend detected.", current.getTimestamp()));
+                if ((systolicPrev - systolicPrevPrev > 10 && systolicCurrent - systolicPrev > 10) ||
+                        (systolicPrevPrev - systolicPrev > 10 && systolicPrev - systolicCurrent > 10)) {
+                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()),
+                            "Inconsistent systolic blood pressure trend detected.",
+                            current.getTimestamp()));
                 }
             }
         }

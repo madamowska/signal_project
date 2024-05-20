@@ -12,7 +12,7 @@ public class CombinedAlertService implements AlertService{
         double lastOxygenSaturation = -1;
 
         for (PatientRecord record : records) {
-            if (" Systolic Blood Pressure".equals(record.getRecordType())) {
+            if ("Systolic Blood Pressure".equals(record.getRecordType())) {
                 lastSystolicBP = record.getMeasurementValue();
             } else if ("Blood Oxygen".equals(record.getRecordType())) {
                 lastOxygenSaturation = record.getMeasurementValue();
