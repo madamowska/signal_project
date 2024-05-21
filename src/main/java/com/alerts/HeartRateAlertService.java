@@ -5,15 +5,17 @@ import com.data_management.PatientRecord;
 import java.util.List;
 
 public class HeartRateAlertService implements AlertService{
+    private static final double VARIABILITY_THRESHOLD = 0.2;
+    private static final double MIN_HEART_RATE = 50;
+    private static final double MAX_HEART_RATE = 100;
 
     public void checkAndTriggerAlerts (List<PatientRecord> records, AlertGenerator alertGenerator) {
         PatientRecord previousRecord = null;
-        final double VARIABILITY_THRESHOLD = 0.2;
 
         for (PatientRecord record : records) {
-            if ("Heart Rate".equals(record.getRecordType())) {
+            if ("HeartRate".equals(record.getRecordType())) {
                 double heartRate = record.getMeasurementValue();
-                if (heartRate < 50 || heartRate > 100) {
+                if (heartRate < MIN_HEART_RATE || heartRate > MAX_HEART_RATE) {
                     alertGenerator.triggerAlert(new Alert(Integer.toString(record.getPatientId()), "Abnormal heart rate detected: " + heartRate, record.getTimestamp()));
                 }
 
