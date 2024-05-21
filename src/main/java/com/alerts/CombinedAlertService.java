@@ -6,7 +6,7 @@ import java.util.List;
 
 public class CombinedAlertService implements AlertService{
     public static final double  MINIMAL_SYSTOLIC = 90.0;
-    public static final double MINIMAL_SATURATION = 0.92
+    public static final double MINIMAL_SATURATION = 0.92;
 
     public void checkAndTriggerAlerts (List<PatientRecord> records, AlertGenerator alertGenerator) {
         // Assuming records are sorted by timestamp
