@@ -5,26 +5,34 @@ import com.data_management.PatientRecord;
 import java.util.List;
 
 public class DiastolicBPAlertService implements AlertService{
+    private static final double CRITICAL_DIASTOLIC_UPPER = 120.0;
+    private static final double CRITICAL_DIASTOLIC_LOWER = 60.0;
+    private static final double TREND_THRESHOLD = 10.0;
+
+    private SlidingWindow window = new SlidingWindow(3);
 
     public void checkAndTriggerAlerts(List<PatientRecord> records, AlertGenerator alertGenerator) {
-        for (int i = 2; i < records.size(); i++) {
-            PatientRecord current = records.get(i);
-            PatientRecord prev = records.get(i - 1);
-            PatientRecord prevPrev = records.get(i - 2);
+        for (PatientRecord record : records) {
+            if (record.getRecordType().equals("SystolicPressure")) {
 
-            if ("Diastolic BP".equals(current.getRecordType())) {
-                double diastolicCurrent = current.getMeasurementValue();
-                double diastolicPrev = prev.getMeasurementValue();
-                double diastolicPrevPrev = prevPrev.getMeasurementValue();
-
+                double value = record.getMeasurementValue();
                 // Check for critical thresholds
-                if (diastolicCurrent > 120 || diastolicCurrent < 60) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Critical diastolic blood pressure level detected: " + diastolicCurrent + " mmHg", current.getTimestamp()));
+                if (value > CRITICAL_DIASTOLIC_UPPER || value < CRITICAL_DIASTOLIC_LOWER) {
+                    String patientID = record.getPatientId() + "";
+                    alertGenerator.triggerAlert(new Alert(record.getPatientId() + "",
+                            "Critical systolic blood pressure level detected", record.getTimestamp()));
                 }
-
+                window.addData(value);
                 // Check for trends
-                if (Math.abs(diastolicCurrent - diastolicPrev) > 10 && Math.abs(diastolicPrev - diastolicPrevPrev) > 10) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Consistent diastolic blood pressure trend detected.", current.getTimestamp()));
+                if (window.isFull()) {
+                    double first = window.getWindow().peek();
+                    double second = window.getWindow().toArray(new Double[0])[1];
+                    double third = window.getWindow().toArray(new Double[0])[2];
+                    if (Math.abs(first - second) > TREND_THRESHOLD && Math.abs(second - third) > TREND_THRESHOLD) {
+                        alertGenerator.triggerAlert(new Alert(record.getPatientId() + "",
+                                "Inconsistent systolic blood pressure trend detected.",
+                                record.getTimestamp()));
+                    }
                 }
             }
         }
