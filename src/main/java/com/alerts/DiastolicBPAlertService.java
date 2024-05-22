@@ -14,7 +14,7 @@ public class DiastolicBPAlertService implements AlertService{
 
     public void checkAndTriggerAlerts(Patient patient, List<PatientRecord> records, AlertGenerator alertGenerator) {
         for (PatientRecord record : records) {
-            if (record.getRecordType().equals("SystolicPressure")) {
+            if (record.getRecordType().equals("DiastolicPressure")) {
 
                 double value = record.getMeasurementValue();
                 // Check for critical thresholds
