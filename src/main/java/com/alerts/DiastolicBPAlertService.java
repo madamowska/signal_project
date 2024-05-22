@@ -1,5 +1,6 @@
 package com.alerts;
 
+import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class DiastolicBPAlertService implements AlertService{
 
     private SlidingWindow window = new SlidingWindow(3);
 
-    public void checkAndTriggerAlerts(List<PatientRecord> records, AlertGenerator alertGenerator) {
+    public void checkAndTriggerAlerts(Patient patient, List<PatientRecord> records, AlertGenerator alertGenerator) {
         for (PatientRecord record : records) {
             if (record.getRecordType().equals("SystolicPressure")) {
 
@@ -20,7 +21,7 @@ public class DiastolicBPAlertService implements AlertService{
                 if (value > CRITICAL_DIASTOLIC_UPPER || value < CRITICAL_DIASTOLIC_LOWER) {
                     String patientID = record.getPatientId() + "";
                     alertGenerator.triggerAlert(new Alert(record.getPatientId() + "",
-                            "Critical systolic blood pressure level detected", record.getTimestamp()));
+                            "Critical systolic blood pressure level detected", record.getTimestamp()), patient);
                 }
                 window.addData(value);
                 // Check for trends
@@ -31,7 +32,7 @@ public class DiastolicBPAlertService implements AlertService{
                     if (Math.abs(first - second) > TREND_THRESHOLD && Math.abs(second - third) > TREND_THRESHOLD) {
                         alertGenerator.triggerAlert(new Alert(record.getPatientId() + "",
                                 "Inconsistent systolic blood pressure trend detected.",
-                                record.getTimestamp()));
+                                record.getTimestamp()), patient);
                     }
                 }
             }

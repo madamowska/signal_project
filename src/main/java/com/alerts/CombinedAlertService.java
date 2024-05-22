@@ -1,5 +1,6 @@
 package com.alerts;
 
+import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
@@ -8,7 +9,7 @@ public class CombinedAlertService implements AlertService{
     public static final double  MINIMAL_SYSTOLIC = 90.0;
     public static final double MINIMAL_SATURATION = 0.92;
 
-    public void checkAndTriggerAlerts (List<PatientRecord> records, AlertGenerator alertGenerator) {
+    public void checkAndTriggerAlerts (Patient patient, List<PatientRecord> records, AlertGenerator alertGenerator) {
         // Assuming records are sorted by timestamp
         double lastSystolicBP = -1;
         double lastOxygenSaturation = -1;
@@ -23,7 +24,7 @@ public class CombinedAlertService implements AlertService{
             // Check combined condition
             if (lastSystolicBP != -1 && lastOxygenSaturation != -1) {
                 if (lastSystolicBP < MINIMAL_SYSTOLIC && lastOxygenSaturation < MINIMAL_SATURATION) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(record.getPatientId()), "Hypotensive hypoxemia detected.", record.getTimestamp()));
+                    alertGenerator.triggerAlert(new Alert(Integer.toString(record.getPatientId()), "Hypotensive hypoxemia detected.", record.getTimestamp()),patient);
                     break;
                 }
             }

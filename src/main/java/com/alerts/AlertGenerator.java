@@ -60,7 +60,7 @@ public class AlertGenerator {
         }
 
         for (AlertService service : alertServices) {
-            service.checkAndTriggerAlerts(records, this);
+            service.checkAndTriggerAlerts(patient, records, this);
         }
 
     }
@@ -73,9 +73,8 @@ public class AlertGenerator {
      *
      * @param alert the alert object containing details about the alert condition
      */
-    void triggerAlert(Alert alert) {
+    void triggerAlert(Alert alert, Patient patient) {
         // Implementation might involve logging the alert or notifying staff
-        Patient patient = new Patient(Integer.parseInt(alert.getPatientId()));
         //measurement value 1 - boolean - alert was triggered
         patient.addRecord(1, "Alert", alert.getTimestamp());
         System.out.println(alert.toString());

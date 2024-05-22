@@ -3,7 +3,6 @@ package data_management;
 import com.data_management.DataReader;
 import com.data_management.DataStorage;
 import com.data_management.OutputFileDataReader;
-import com.data_management.Patient;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 class DataReaderTest {
 
     @Test
-    void tesReadOutputFile(){
+    void testReadOutputFile(){
         String diretory = "/Users/martaadamowska/signal_project/test";
         OutputFileDataReader outputFileDataReader = new OutputFileDataReader(diretory);
         DataStorage storage = new DataStorage();
