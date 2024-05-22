@@ -20,7 +20,7 @@ public class BloodOxygenAlertService implements AlertService{
                 if (currentSaturation < MINIMAL_SATURATION) {
                     alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Low blood oxygen saturation detected: " + currentSaturation*100 + "%", current.getTimestamp()),patient);
                 }
-                if(records.size()>1){
+                if(records.size()>1 && i<records.size()-1){
                     double nextSaturation = records.get(i+1).getMeasurementValue();
                     long timeDiff = records.get(i).getTimestamp() - records.get(i+1).getTimestamp();
                     // Check for rapid drop within 10 minutes (600000 milliseconds)
