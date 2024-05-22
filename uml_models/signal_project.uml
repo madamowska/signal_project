@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>/Users/martaadamowska/signal_project/src/main/java</OriginalElement>
+  <nodes>
+    <node x="1665.0" y="722.0">com.alerts.SystolicBPAlertService</node>
+    <node x="975.5" y="-141.0">com.alerts.SlidingWindow</node>
+    <node x="1558.5" y="-141.0">com.alerts.Alert</node>
+    <node x="-227.0" y="855.0">com.data_management.DataStorage</node>
+    <node x="352.0" y="464.0">com.cardio_generator.generators.BloodLevelsDataGenerator</node>
+    <node x="161.0" y="855.0">com.data_management.Patient</node>
+    <node x="664.5" y="-28.0">com.cardio_generator.outputs.ConsoleOutputStrategy</node>
+    <node x="719.0" y="722.0">com.alerts.BloodOxygenAlertService</node>
+    <node x="352.0" y="339.0">com.cardio_generator.generators.PatientDataGenerator</node>
+    <node x="1576.0" y="339.0">com.cardio_generator.HealthDataSimulator</node>
+    <node x="810.0" y="855.0">Main</node>
+    <node x="246.0" y="722.0">com.alerts.HeartRateAlertService</node>
+    <node x="634.0" y="464.0">com.cardio_generator.generators.BloodSaturationDataGenerator</node>
+    <node x="1192.0" y="722.0">com.alerts.DiastolicBPAlertService</node>
+    <node x="1302.0" y="339.0">com.data_management.DataReader</node>
+    <node x="92.5" y="-28.0">com.cardio_generator.outputs.TcpOutputStrategy</node>
+    <node x="-227.0" y="722.0">com.alerts.CombinedAlertService</node>
+    <node x="526.0" y="855.0">com.alerts.AlertGenerator</node>
+    <node x="719.0" y="609.0">com.alerts.AlertService</node>
+    <node x="55.0" y="464.0">com.cardio_generator.generators.BloodPressureDataGenerator</node>
+    <node x="1296.0" y="452.0">com.data_management.OutputFileDataReader</node>
+    <node x="235.5" y="-141.0">com.cardio_generator.outputs.OutputStrategy</node>
+    <node x="378.5" y="-28.0">com.cardio_generator.outputs.FileOutputStrategy</node>
+    <node x="-193.5" y="-28.0">com.cardio_generator.outputs.WebSocketOutputStrategy</node>
+    <node x="943.0" y="452.0">com.cardio_generator.generators.ECGDataGenerator</node>
+    <node x="-227.0" y="464.0">com.cardio_generator.generators.AlertGenerator</node>
+    <node x="1222.5" y="-141.0">com.data_management.PatientRecord</node>
+    <node x="-227.0" y="110.0">com.cardio_generator.outputs.WebSocketOutputStrategy.SimpleWebSocketServer</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.cardio_generator.generators.BloodSaturationDataGenerator" target="com.cardio_generator.generators.PatientDataGenerator" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="778.5" y="427.0" />
+      <point x="483.0" y="427.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.outputs.FileOutputStrategy" target="com.cardio_generator.outputs.OutputStrategy" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="511.5" y="-53.0" />
+      <point x="368.5" y="-53.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.data_management.OutputFileDataReader" target="com.data_management.DataReader" relationship="REALIZATION">
+      <point x="0.0" y="-56.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.alerts.DiastolicBPAlertService" target="com.alerts.AlertService" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="1418.5" y="697.0" />
+      <point x="945.5" y="697.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.alerts.CombinedAlertService" target="com.alerts.AlertService" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="-0.5" y="697.0" />
+      <point x="945.5" y="697.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.outputs.TcpOutputStrategy" target="com.cardio_generator.outputs.OutputStrategy" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="225.5" y="-53.0" />
+      <point x="368.5" y="-53.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.outputs.ConsoleOutputStrategy" target="com.cardio_generator.outputs.OutputStrategy" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="797.5" y="-53.0" />
+      <point x="368.5" y="-53.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.outputs.WebSocketOutputStrategy.SimpleWebSocketServer" target="com.cardio_generator.outputs.WebSocketOutputStrategy" relationship="INNER_CLASS">
+      <point x="0.0" y="-92.0" />
+      <point x="0.0" y="44.0" />
+    </edge>
+    <edge source="com.cardio_generator.generators.AlertGenerator" target="com.cardio_generator.generators.PatientDataGenerator" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="-96.0" y="427.0" />
+      <point x="483.0" y="427.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.alerts.HeartRateAlertService" target="com.alerts.AlertService" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="472.5" y="697.0" />
+      <point x="945.5" y="697.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.generators.ECGDataGenerator" target="com.cardio_generator.generators.PatientDataGenerator" relationship="REALIZATION">
+      <point x="0.0" y="-56.0" />
+      <point x="1097.0" y="427.0" />
+      <point x="483.0" y="427.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.alerts.BloodOxygenAlertService" target="com.alerts.AlertService" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.outputs.WebSocketOutputStrategy" target="com.cardio_generator.outputs.OutputStrategy" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="-60.5" y="-53.0" />
+      <point x="368.5" y="-53.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.alerts.SystolicBPAlertService" target="com.alerts.AlertService" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="1891.5" y="697.0" />
+      <point x="945.5" y="697.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.generators.BloodLevelsDataGenerator" target="com.cardio_generator.generators.PatientDataGenerator" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+    <edge source="com.cardio_generator.generators.BloodPressureDataGenerator" target="com.cardio_generator.generators.PatientDataGenerator" relationship="REALIZATION">
+      <point x="0.0" y="-44.0" />
+      <point x="193.5" y="427.0" />
+      <point x="483.0" y="427.0" />
+      <point x="0.0" y="31.5" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic" zoom="0.3985846361876756" showDependencies="false" x="855.900201250796" y="469.36726844559325" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
