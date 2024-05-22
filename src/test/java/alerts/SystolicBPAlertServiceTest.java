@@ -20,8 +20,8 @@ public class SystolicBPAlertServiceTest {
 
         // correct blood pressure
         patient.addRecord(100,"SystolicPressure",1713620522833L);
-        // low blood pressure (<60)
-        patient.addRecord(59,"SystolicPressure",1713620522833L);
+        // low blood pressure (<90)
+        patient.addRecord(89,"SystolicPressure",1713620522833L);
 
         SystolicBPAlertService  alertService = new SystolicBPAlertService();
         alertService.checkAndTriggerAlerts(patient,patient.getRecords(1700000000000L, 1800000000000L),new AlertGenerator(dataStorage));
@@ -47,7 +47,7 @@ public class SystolicBPAlertServiceTest {
         int recordID = record.getPatientId();
         String recordType = record.getRecordType();
 
-        assertEquals(59,recordValue);
+        assertEquals(89,recordValue);
         assertEquals(1,recordID);
         assertEquals("SystolicPressure",recordType);
     }
@@ -60,8 +60,8 @@ public class SystolicBPAlertServiceTest {
 
         // correct blood pressure
         patient.addRecord(100,"SystolicPressure",1713620522833L);
-        // low blood pressure (>120)
-        patient.addRecord(121,"SystolicPressure",1713620522833L);
+        // low blood pressure (>180)
+        patient.addRecord(181,"SystolicPressure",1713620522833L);
 
         SystolicBPAlertService  alertService = new SystolicBPAlertService();
         alertService.checkAndTriggerAlerts(patient,patient.getRecords(1700000000000L, 1800000000000L),new AlertGenerator(dataStorage));
@@ -87,7 +87,7 @@ public class SystolicBPAlertServiceTest {
         int recordID = record.getPatientId();
         String recordType = record.getRecordType();
 
-        assertEquals(121,recordValue);
+        assertEquals(181,recordValue);
         assertEquals(1,recordID);
         assertEquals("SystolicPressure",recordType);
     }
@@ -99,9 +99,9 @@ public class SystolicBPAlertServiceTest {
         DataStorage dataStorage = new DataStorage();
 
         // Add records to patient
-        patient.addRecord(80, "SystolicPressure", 1713620522833L);
-        patient.addRecord(90, "SystolicPressure", 1713620522834L);
-        patient.addRecord(115, "SystolicPressure", 1713620522835L); // This should trigger the trend alert
+        patient.addRecord(100, "SystolicPressure", 1713620522833L);
+        patient.addRecord(115, "SystolicPressure", 1713620522834L);
+        patient.addRecord(130, "SystolicPressure", 1713620522835L); // This should trigger the trend alert
 
         List<PatientRecord> records = patient.getRecords(1700000000000L, 1800000000000L);
         AlertGenerator alertGenerator =new AlertGenerator(new DataStorage());
