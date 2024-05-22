@@ -1,71 +1,129 @@
-//package alerts;
-//
-//import com.alerts.Alert;
-//import com.alerts.HeartRateAlertService;
-//import com.data_management.DataStorage;
-//import com.data_management.PatientRecord;
-//import org.junit.Assert;
-//import org.junit.Before;
-//import org.junit.Test;
-//
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.Assert.assertTrue;
-//
-//import java.util.List;
-//
-//public class HeartRateAlertServiceTest {
-//
-//    private HeartRateAlertService service;
-//    private FakeAlertGenerator fakeAlertGenerator;
-//    private List<PatientRecord> records_1;
-//    private List<PatientRecord> records_2;
-//    private List<PatientRecord> records_3;
-//
-//    @Before
-//    public void setUp() {
-//        fakeAlertGenerator = new FakeAlertGenerator(new DataStorage());
-//        service = new HeartRateAlertService();
-//
-//        records_1 = List.of(
-//                new PatientRecord(1, 49, "Heart Rate", 1714376789052L)
-//
-//        );
-//        records_2 = List.of(
-//                new PatientRecord(1, 101, "Heart Rate", 1714376789052L)
-//
-//        );
-//        records_3 = List.of(
-//                new PatientRecord(1, 80, "Heart Rate", 1714376789052L),
-//                new PatientRecord(1, 63, "Heart Rate", 1714376789055L)
-//        );
-//    }
-//        @Test
-//        public void testAbnormalLowHeartRate() {
-//            service.checkAndTriggerAlerts(records_1, fakeAlertGenerator);
-//            List<Alert> alerts = fakeAlertGenerator.getTriggeredAlerts();
-//
-//            assertEquals(1, alerts.size());
-//            assertTrue(alerts.get(0).getCondition().contains("Abnormal heart rate"));
-//
-//        }
-//
-//    @Test
-//    public void testAbnormalHighHeartRate() {
-//
-//        service.checkAndTriggerAlerts(records_2, fakeAlertGenerator);
-//        List<Alert> alerts = fakeAlertGenerator.getTriggeredAlerts();
-//
-//        assertEquals(2, alerts.size());
-//        assertTrue(alerts.get(1).getCondition().contains("Abnormal heart rate"));
-//
-//    }
-//        @Test
-//        public void testHeartRateVariability() {
-//            service.checkAndTriggerAlerts(records_3, fakeAlertGenerator);
-//            List<Alert> alerts = fakeAlertGenerator.getTriggeredAlerts();
-//            assertEquals(3, alerts.size());
-//            assertTrue(alerts.stream().anyMatch(a -> a.getCondition().contains("Significant heart rate variability")));
-//        }
-//
-//
-//}
+package alerts;
+
+import com.alerts.AlertGenerator;
+import com.alerts.HeartRateAlertService;
+import com.alerts.SystolicBPAlertService;
+import com.data_management.DataStorage;
+import com.data_management.Patient;
+import com.data_management.PatientRecord;
+import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class HeartRateAlertServiceTest {
+
+        @Test
+        void testTooLowHeartRate (){
+            Patient patient = new Patient(1);
+            DataStorage dataStorage = new DataStorage();
+
+            // correct heart rate
+            patient.addRecord(55,"HeartRate",1713620522833L);
+            // low heart rate (<50)
+            patient.addRecord(49,"HeartRate",1713620522833L);
+
+            HeartRateAlertService alertService = new HeartRateAlertService();
+            alertService.checkAndTriggerAlerts(patient,patient.getRecords(1700000000000L, 1800000000000L),new AlertGenerator(dataStorage));
+
+            List<PatientRecord> records = patient.getRecords(1700000000000L, 1800000000000L);
+
+            // check size of patient record list
+            assertEquals(3, records.size());
+
+            // check alert in patient records list
+            PatientRecord alert = records.get(records.size()-1);
+            double alertValue = alert.getMeasurementValue();
+            int alertID = alert.getPatientId();
+            String alertType = alert.getRecordType();
+
+            assertEquals(1,alertValue);
+            assertEquals(1,alertID);
+            assertEquals("Alert",alertType);
+
+            // check record in patient records list
+            PatientRecord record = records.get(records.size()-2);
+            double recordValue = record.getMeasurementValue();
+            int recordID = record.getPatientId();
+            String recordType = record.getRecordType();
+
+            assertEquals(49,recordValue);
+            assertEquals(1,recordID);
+            assertEquals("HeartRate",recordType);
+        }
+
+
+        @Test
+        void testTooHighHeartRate (){
+            Patient patient = new Patient(1);
+            DataStorage dataStorage = new DataStorage();
+
+            // correct heart rate
+            patient.addRecord(90,"HeartRate",1713620522833L);
+            // high heart rate (>100)
+            patient.addRecord(101,"HeartRate",1713620522833L);
+
+            HeartRateAlertService  alertService = new HeartRateAlertService();
+            alertService.checkAndTriggerAlerts(patient,patient.getRecords(1700000000000L, 1800000000000L),new AlertGenerator(dataStorage));
+
+            List<PatientRecord> records = patient.getRecords(1700000000000L, 1800000000000L);
+
+            // check size of patient record list
+            assertEquals(3, records.size());
+
+            // check alert in patient records list
+            PatientRecord alert = records.get(records.size()-1);
+            double alertValue = alert.getMeasurementValue();
+            int alertID = alert.getPatientId();
+            String alertType = alert.getRecordType();
+
+            assertEquals(1,alertValue);
+            assertEquals(1,alertID);
+            assertEquals("Alert",alertType);
+
+            // check record in patient records list
+            PatientRecord record = records.get(records.size()-2);
+            double recordValue = record.getMeasurementValue();
+            int recordID = record.getPatientId();
+            String recordType = record.getRecordType();
+
+            assertEquals(101,recordValue);
+            assertEquals(1,recordID);
+            assertEquals("HeartRate",recordType);
+        }
+
+        @Test
+        void testTrendDetectionInSlidingWindow() {
+            // Arrange
+            Patient patient = new Patient(1);
+            DataStorage dataStorage = new DataStorage();
+
+            // Add records to patient
+            patient.addRecord(60, "HeartRate", 1713620522833L);
+            patient.addRecord(73, "HeartRate", 1713620522834L); // This should trigger the trend alert
+
+            List<PatientRecord> records = patient.getRecords(1700000000000L, 1800000000000L);
+            AlertGenerator alertGenerator =new AlertGenerator(new DataStorage());
+            HeartRateAlertService alertService = new HeartRateAlertService();
+            alertService.checkAndTriggerAlerts(patient, records, alertGenerator);
+            records = patient.getRecords(1700000000000L, 1800000000000L);
+
+            // check size of patient record list
+            assertEquals(3, records.size());
+
+            // check alert in patient records list
+            PatientRecord alert = records.get(records.size()-1);
+            double alertValue = alert.getMeasurementValue();
+            int alertID = alert.getPatientId();
+            String alertType = alert.getRecordType();
+
+            assertEquals(1,alertValue);
+            assertEquals(1,alertID);
+            assertEquals("Alert",alertType);
+        }
+    }
+
+
+
+
