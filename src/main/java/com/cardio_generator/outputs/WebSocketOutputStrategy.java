@@ -54,5 +54,7 @@ public class WebSocketOutputStrategy implements OutputStrategy {
         public void onStart() {
             System.out.println("Server started successfully");
         }
+
     }
+
 }

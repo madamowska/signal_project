@@ -13,7 +13,7 @@ class DataReaderTest {
 
     @Test
     void testReadOutputFile(){
-        String diretory = "/Users/martaadamowska/signal_project/test";
+        String diretory = "/Users/katarinadvornak/signal_project/test";
         OutputFileDataReader outputFileDataReader = new OutputFileDataReader(diretory);
         DataStorage storage = new DataStorage();
 

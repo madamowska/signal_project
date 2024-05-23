@@ -88,6 +88,11 @@ public class OutputFileDataReader implements DataReader{
         }
     }
 
+    @Override
+    public void readData_websocket(DataStorage dataStorage, int port) throws IOException {
+
+    }
+
 
     public static void main(String[] args) throws IOException {
         String diretory = "/Users/martaadamowska/signal_project/test";
