@@ -14,4 +14,10 @@ public class MockDataReader implements DataReader {
 
 
     }
+
+    @Override
+    public void readData_websocket(DataStorage dataStorage, int port) throws IOException {
+
+    }
+
 }
