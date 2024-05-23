@@ -10,6 +10,13 @@ public class BloodOxygenAlertService implements AlertService{
     private static final double MAXIMUM_SATURATION_DROP = 0.05;
     private static final long TEN_MINUTES = 600000;
 
+    /**
+     *
+     * @param patient
+     * @param records
+     * @param alertGenerator
+     */
+
     public void checkAndTriggerAlerts (Patient patient, List<PatientRecord> records, AlertGenerator alertGenerator) {
         for (int i = 0; i < records.size(); i++) {
             PatientRecord current = records.get(i);
