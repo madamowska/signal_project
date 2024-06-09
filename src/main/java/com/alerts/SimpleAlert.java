@@ -1,7 +1,9 @@
 package com.alerts;
 
+import com.alerts.alertDecorators.Alert;
+
 // Represents an alert
-public class SimpleAlert {
+public class SimpleAlert implements Alert {
     private String patientId;
     private String condition;
     private long timestamp;
@@ -33,4 +35,5 @@ public class SimpleAlert {
                 ", condition='" + condition + '\'' +
                 ", timestamp=" + timestamp + '}';
     }
+
 }

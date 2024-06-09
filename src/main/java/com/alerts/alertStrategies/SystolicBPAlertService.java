@@ -1,5 +1,6 @@
 package com.alerts.alertStrategies;
 
+import com.alerts.BloodPressureAlert;
 import com.alerts.SimpleAlert;
 import com.alerts.AlertGenerator;
 import com.alerts.SlidingWindow;
@@ -23,7 +24,7 @@ public class SystolicBPAlertService implements AlertService {
                 // Check for critical thresholds
                 if (value > CRITICAL_SYSTOLIC_UPPER || value < CRITICAL_SYSTOLIC_LOWER) {
                     String patientID = record.getPatientId() + "";
-                    alertGenerator.triggerAlert(new SimpleAlert(record.getPatientId() + "",
+                    alertGenerator.triggerAlert(new BloodPressureAlert(record.getPatientId() + "",
                             "Critical systolic blood pressure level detected", record.getTimestamp()), patient);
                 }
                 window.addData(value);
@@ -33,7 +34,7 @@ public class SystolicBPAlertService implements AlertService {
                     double second = window.getWindow().toArray(new Double[0])[1];
                     double third = window.getWindow().toArray(new Double[0])[2];
                     if (Math.abs(first - second) > TREND_THRESHOLD && Math.abs(second - third) > TREND_THRESHOLD) {
-                        alertGenerator.triggerAlert( new SimpleAlert(record.getPatientId() + "",
+                        alertGenerator.triggerAlert( new BloodPressureAlert(record.getPatientId() + "",
                                 "Inconsistent systolic blood pressure trend detected.",
                                 record.getTimestamp()), patient);
                     }

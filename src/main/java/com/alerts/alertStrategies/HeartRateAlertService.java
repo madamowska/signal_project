@@ -1,5 +1,7 @@
-package com.alerts;
+package com.alerts.alertStrategies;
 
+import com.alerts.AlertGenerator;
+import com.alerts.HeartRateAlert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -17,7 +19,7 @@ public class HeartRateAlertService implements AlertService{
             if ("HeartRate".equals(record.getRecordType())) {
                 double heartRate = record.getMeasurementValue();
                 if (heartRate < MIN_HEART_RATE || heartRate > MAX_HEART_RATE) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(record.getPatientId()), "Abnormal heart rate detected: " + heartRate, record.getTimestamp()),patient);
+                    alertGenerator.triggerAlert(new HeartRateAlert(Integer.toString(record.getPatientId()), "Abnormal heart rate detected: " + heartRate, record.getTimestamp()),patient);
                 }
 
                 // Check for irregular heartbeat if there is a previous record to compare
@@ -27,7 +29,7 @@ public class HeartRateAlertService implements AlertService{
 
                     // Trigger alert if the variation is greater than the threshold
                     if (variation > VARIABILITY_THRESHOLD) {
-                        alertGenerator.triggerAlert(new Alert(Integer.toString(record.getPatientId()),
+                        alertGenerator.triggerAlert(new HeartRateAlert(Integer.toString(record.getPatientId()),
                                 "Significant heart rate variability detected: Current rate = " + heartRate
                                         + ", Previous rate = " + previousHeartRate, record.getTimestamp()),patient);
                     }

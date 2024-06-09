@@ -1,5 +1,8 @@
-package com.alerts;
+package com.alerts.alertStrategies;
 
+import com.alerts.AlertGenerator;
+import com.alerts.SimpleAlert;
+import com.alerts.alertDecorators.Alert;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -24,7 +27,7 @@ public class CombinedAlertService implements AlertService{
             // Check combined condition
             if (lastSystolicBP != -1 && lastOxygenSaturation != -1) {
                 if (lastSystolicBP < MINIMAL_SYSTOLIC && lastOxygenSaturation < MINIMAL_SATURATION) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(record.getPatientId()), "Hypotensive hypoxemia detected.", record.getTimestamp()),patient);
+                    alertGenerator.triggerAlert(new SimpleAlert(Integer.toString(record.getPatientId()), "Hypotensive hypoxemia detected.", record.getTimestamp()),patient);
                     break;
                 }
             }
