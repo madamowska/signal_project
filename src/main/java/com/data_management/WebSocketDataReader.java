@@ -13,8 +13,9 @@ public class WebSocketDataReader implements DataReader {
         private WebSocketClient client;
         private int port;
 
-        public WebSocketDataReader(int port){
+        public WebSocketDataReader(int port, WebSocketClient client){
             this.port = port;
+            this.client = client;
         }
 
         @Override
@@ -66,19 +67,27 @@ public class WebSocketDataReader implements DataReader {
             }
         }
 
-    public static void main(String[] args) throws IOException {
-        int port = 80;
-        WebSocketDataReader webSocketDataReader = new WebSocketDataReader(port);
-        DataStorage dataStorage = new DataStorage();
-        webSocketDataReader.readData_websocket(dataStorage,port);
-        List<PatientRecord> records = dataStorage.getRecords(2, 1700000000000L, 1800000000000L);
-        for (PatientRecord record : records) {
-            System.out.println("Record for Patient ID: " + record.getPatientId() +
-                    ", Type: " + record.getRecordType() +
-                    ", Data: " + record.getMeasurementValue() +
-                    ", Timestamp: " + record.getTimestamp());
-        }
+    public void setClient(WebSocketClient client) {
+        this.client = client;
     }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+//    public static void main(String[] args) throws IOException {
+//        int port = 8080;
+//        WebSocketDataReader webSocketDataReader = new WebSocketDataReader(port);
+//        DataStorage dataStorage = new DataStorage();
+//        webSocketDataReader.readData_websocket(dataStorage,port);
+//        List<PatientRecord> records = dataStorage.getRecords(2, 1700000000000L, 1800000000000L);
+//        for (PatientRecord record : records) {
+//            System.out.println("Record for Patient ID: " + record.getPatientId() +
+//                    ", Type: " + record.getRecordType() +
+//                    ", Data: " + record.getMeasurementValue() +
+//                    ", Timestamp: " + record.getTimestamp());
+//        }
+//    }
     }
 
 

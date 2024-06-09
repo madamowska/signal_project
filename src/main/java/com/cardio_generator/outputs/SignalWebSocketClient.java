@@ -33,7 +33,7 @@ public class SignalWebSocketClient extends WebSocketClient {
     }
     public static void main(String[] args) {
         try {
-            URI serverUri = new URI("ws://localhost:12345");
+            URI serverUri = new URI("ws://localhost:8080");
             SignalWebSocketClient client = new SignalWebSocketClient(serverUri);
             client.connectBlocking(); // Synchronous connect
             System.out.println("WebSocket Client connected");
