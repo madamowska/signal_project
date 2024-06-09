@@ -1,6 +1,6 @@
 package com.alerts;
 
-public class HeartRateAlert extends Alert{
+public class HeartRateAlert extends SimpleAlert {
 
 
     public HeartRateAlert(String patientId, String condition, long timestamp) {

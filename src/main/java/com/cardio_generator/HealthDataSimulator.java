@@ -32,10 +32,23 @@ import java.util.ArrayList;
  * */
 public class HealthDataSimulator {
 
+    private static HealthDataSimulator instance;
     private static int patientCount = 50; // Default number of patients
     private static ScheduledExecutorService scheduler;
     private static OutputStrategy outputStrategy = new ConsoleOutputStrategy(); // Default output strategy
     private static final Random random = new Random();
+
+    // Private constructor
+    private HealthDataSimulator() {
+    }
+
+    // Static method to get the instance of HealthDataSimulator
+    public static HealthDataSimulator getInstance() {
+        if (instance == null) {
+            instance = new HealthDataSimulator();
+        }
+        return instance;
+    }
 
 /**
  * Main method to run the simulator with command-line arguments to configure patient

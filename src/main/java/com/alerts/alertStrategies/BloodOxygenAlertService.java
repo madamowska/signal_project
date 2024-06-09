@@ -1,8 +1,7 @@
-package com.alerts.alertServices;
+package com.alerts.alertStrategies;
 
-import com.alerts.Alert;
+import com.alerts.SimpleAlert;
 import com.alerts.AlertGenerator;
-import com.alerts.alertServices.AlertService;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
@@ -21,14 +20,14 @@ public class BloodOxygenAlertService implements AlertService {
 
                 // Check for low saturation
                 if (currentSaturation < MINIMAL_SATURATION) {
-                    alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Low blood oxygen saturation detected: " + currentSaturation*100 + "%", current.getTimestamp()),patient);
+                    alertGenerator.triggerAlert(new SimpleAlert(Integer.toString(current.getPatientId()), "Low blood oxygen saturation detected: " + currentSaturation*100 + "%", current.getTimestamp()),patient);
                 }
                 if(records.size()>1 && i<records.size()-1){
                     double nextSaturation = records.get(i+1).getMeasurementValue();
                     long timeDiff = records.get(i).getTimestamp() - records.get(i+1).getTimestamp();
                     // Check for rapid drop within 10 minutes (600000 milliseconds)
                     if (timeDiff <= TEN_MINUTES && (currentSaturation - nextSaturation) >= MAXIMUM_SATURATION_DROP) {
-                        alertGenerator.triggerAlert(new Alert(Integer.toString(current.getPatientId()), "Rapid drop in blood oxygen saturation detected.", current.getTimestamp()),patient);
+                        alertGenerator.triggerAlert(new SimpleAlert(Integer.toString(current.getPatientId()), "Rapid drop in blood oxygen saturation detected.", current.getTimestamp()),patient);
                     }
                 }
 

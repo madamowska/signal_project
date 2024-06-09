@@ -20,4 +20,5 @@ public class MockDataReader implements DataReader {
 
     }
 
+    public void stop(){}
 }

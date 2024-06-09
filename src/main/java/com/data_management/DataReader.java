@@ -23,7 +23,7 @@ public interface DataReader {
          * @throws IOException if there is an error reading the data
          */
         void readData_websocket(DataStorage dataStorage, int port ) throws IOException;
-
+        void stop();
 }
 
 

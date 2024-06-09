@@ -108,4 +108,6 @@ public class OutputFileDataReader implements DataReader{
         }
     }
 
+    public void stop(){}
+
 }

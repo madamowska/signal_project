@@ -55,7 +55,7 @@ import java.io.IOException;
             }
         }
 
-        public void close() {
+        public void stop() {
             if (client != null) {
                 client.close();
             }
