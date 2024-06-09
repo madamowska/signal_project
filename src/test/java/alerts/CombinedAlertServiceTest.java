@@ -1,8 +1,7 @@
 package alerts;
 
 import com.alerts.AlertGenerator;
-import com.alerts.AlertService;
-import com.alerts.CombinedAlertService;
+import com.alerts.alertServices.CombinedAlertService;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;

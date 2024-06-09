@@ -1,11 +1,14 @@
-package com.alerts;
+package com.alerts.alertServices;
 
+import com.alerts.Alert;
+import com.alerts.AlertGenerator;
+import com.alerts.alertServices.AlertService;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
-public class BloodOxygenAlertService implements AlertService{
+public class BloodOxygenAlertService implements AlertService {
     private static final double MINIMAL_SATURATION = 0.92;
     private static final double MAXIMUM_SATURATION_DROP = 0.05;
     private static final long TEN_MINUTES = 600000;

@@ -1,7 +1,7 @@
 package alerts;
 
 import com.alerts.AlertGenerator;
-import com.alerts.DiastolicBPAlertService;
+import com.alerts.alertServices.DiastolicBPAlertService;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;

@@ -1,11 +1,14 @@
-package com.alerts;
+package com.alerts.alertServices;
 
+import com.alerts.Alert;
+import com.alerts.AlertGenerator;
+import com.alerts.alertServices.AlertService;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
-public class HeartRateAlertService implements AlertService{
+public class HeartRateAlertService implements AlertService {
     private static final double VARIABILITY_THRESHOLD = 0.2;
     private static final double MIN_HEART_RATE = 50;
     private static final double MAX_HEART_RATE = 100;

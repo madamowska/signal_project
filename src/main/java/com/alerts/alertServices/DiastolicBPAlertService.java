@@ -1,11 +1,15 @@
-package com.alerts;
+package com.alerts.alertServices;
 
+import com.alerts.Alert;
+import com.alerts.AlertGenerator;
+import com.alerts.SlidingWindow;
+import com.alerts.alertServices.AlertService;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
-public class DiastolicBPAlertService implements AlertService{
+public class DiastolicBPAlertService implements AlertService {
     private static final double CRITICAL_DIASTOLIC_UPPER = 120.0;
     private static final double CRITICAL_DIASTOLIC_LOWER = 60.0;
     private static final double TREND_THRESHOLD = 10.0;

@@ -1,5 +1,6 @@
 package com.alerts;
 
+import com.alerts.alertServices.*;
 import com.data_management.DataStorage;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
@@ -73,7 +74,7 @@ public class AlertGenerator {
      *
      * @param alert the alert object containing details about the alert condition
      */
-    void triggerAlert(Alert alert, Patient patient) {
+    public void triggerAlert(Alert alert, Patient patient) {
         // Implementation might involve logging the alert or notifying staff
         //measurement value 1 - boolean - alert was triggered
         patient.addRecord(1, "Alert", alert.getTimestamp());

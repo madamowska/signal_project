@@ -1,11 +1,14 @@
-package com.alerts;
+package com.alerts.alertServices;
 
+import com.alerts.Alert;
+import com.alerts.AlertGenerator;
+import com.alerts.alertServices.AlertService;
 import com.data_management.Patient;
 import com.data_management.PatientRecord;
 
 import java.util.List;
 
-public class CombinedAlertService implements AlertService{
+public class CombinedAlertService implements AlertService {
     public static final double  MINIMAL_SYSTOLIC = 90.0;
     public static final double MINIMAL_SATURATION = 0.92;
 
