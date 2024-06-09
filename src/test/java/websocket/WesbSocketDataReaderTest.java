@@ -10,7 +10,6 @@ import com.data_management.DataStorage;
 import com.data_management.PatientRecord;
 import com.data_management.WebSocketDataReader;
 import org.junit.Test;
-import org.java_websocket.client.WebSocketClient;
 public class WesbSocketDataReaderTest {
     @Test
     public void testReadData() throws URISyntaxException {

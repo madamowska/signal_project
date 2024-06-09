@@ -1,12 +1,15 @@
 package com.data_management;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.alerts.AlertGenerator;
+import com.cardio_generator.outputs.SignalWebSocketClient;
 
 /**
  * Manages storage and retrieval of patient data within a healthcare monitoring
@@ -84,28 +87,30 @@ public class DataStorage {
      * 
      * @param args command line arguments
      */
-//    public static void main(String[] args) throws IOException {
-//        //DataReader reader = new OutputFileDataReader("/Users/martaadamowska/signal_project/test");
-//        WebSocketDataReader reader = new WebSocketDataReader(80);
-//        DataStorage storage = new DataStorage();
-//
-//        reader.readData(storage);
-//        System.out.println(storage.getRecords(1, 1700000000000L, 1800000000000L).get(0).getMeasurementValue());
-//        // Example of using DataStorage to retrieve and print records for a patient
-//        List<PatientRecord> records = storage.getRecords(1, 1700000000000L, 1800000000000L);
-//        for (PatientRecord record : records) {
-//            System.out.println("Record for Patient ID: " + record.getPatientId() +
-//                    ", Type: " + record.getRecordType() +
-//                    ", Data: " + record.getMeasurementValue() +
-//                    ", Timestamp: " + record.getTimestamp());
-//        }
-//
-//        // Initialize the AlertGenerator with the storage
-//        //AlertGenerator alertGenerator = new AlertGenerator(storage);
-//
-//        // Evaluate all patients' data to check for conditions that may trigger alerts
-//        //for (Patient patient : storage.getAllPatients()) {
-//          //  alertGenerator.evaluateData(patient);
-//        //}
-//    }
+    public static void main(String[] args) throws IOException, URISyntaxException {
+        //DataReader reader = new OutputFileDataReader("/Users/martaadamowska/signal_project/test");
+
+        DataStorage storage = new DataStorage();
+        SignalWebSocketClient client = new SignalWebSocketClient(new URI("ws://localhost:8080"));
+        WebSocketDataReader reader = new WebSocketDataReader(8080,client);
+
+        reader.readData(storage);
+        System.out.println(storage.getRecords(1, 1700000000000L, 1800000000000L).get(0).getMeasurementValue());
+        // Example of using DataStorage to retrieve and print records for a patient
+        List<PatientRecord> records = storage.getRecords(1, 1700000000000L, 1800000000000L);
+        for (PatientRecord record : records) {
+            System.out.println("Record for Patient ID: " + record.getPatientId() +
+                    ", Type: " + record.getRecordType() +
+                    ", Data: " + record.getMeasurementValue() +
+                    ", Timestamp: " + record.getTimestamp());
+        }
+
+        // Initialize the AlertGenerator with the storage
+        //AlertGenerator alertGenerator = new AlertGenerator(storage);
+
+        // Evaluate all patients' data to check for conditions that may trigger alerts
+        //for (Patient patient : storage.getAllPatients()) {
+          //  alertGenerator.evaluateData(patient);
+        //}
+    }
 }

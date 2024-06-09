@@ -1,5 +1,7 @@
 package com.cardio_generator;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -10,11 +12,8 @@ import com.cardio_generator.generators.BloodPressureDataGenerator;
 import com.cardio_generator.generators.BloodSaturationDataGenerator;
 import com.cardio_generator.generators.BloodLevelsDataGenerator;
 import com.cardio_generator.generators.ECGDataGenerator;
-import com.cardio_generator.outputs.ConsoleOutputStrategy;
-import com.cardio_generator.outputs.FileOutputStrategy;
-import com.cardio_generator.outputs.OutputStrategy;
-import com.cardio_generator.outputs.TcpOutputStrategy;
-import com.cardio_generator.outputs.WebSocketOutputStrategy;
+import com.cardio_generator.outputs.*;
+import org.java_websocket.client.WebSocketClient;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,7 +43,7 @@ public class HealthDataSimulator {
  * @param args Command-line used to customize the execution
  * @throws IOException if there is an error creating directories for file outputs.
  */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException,URISyntaxException {
 
         parseArguments(args);
 
@@ -62,7 +61,7 @@ public class HealthDataSimulator {
      * @param args Command-line arguments provided at runtime.
      * @throws IOException if an output directory needs to be created but fails.
      */
-    private static void parseArguments(String[] args) throws IOException {
+    private static void parseArguments(String[] args) throws IOException, URISyntaxException {
         for (int i = 0; i < args.length; i++) {
             switch (args[i]) {
                 case "-h":

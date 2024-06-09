@@ -2,6 +2,8 @@ package websocket;
 import static org.junit.Assert.*;
 
 import com.cardio_generator.outputs.SignalWebSocketClient;
+import com.cardio_generator.outputs.WebSocketOutputStrategy;
+import org.java_websocket.WebSocket;
 import org.junit.Test;
 import org.java_websocket.handshake.ServerHandshake;
 
@@ -13,6 +15,8 @@ import java.net.URISyntaxException;
 public class WebsocketClientTest {
     @Test
     public void testWebSocketClient() throws URISyntaxException, InterruptedException {
+        WebSocketOutputStrategy webSocketOutputStrategy = new WebSocketOutputStrategy(8080);
+
         final StringBuilder onOpenOutput = new StringBuilder();
         final StringBuilder onMessageOutput = new StringBuilder();
         final StringBuilder onCloseOutput = new StringBuilder();
@@ -22,11 +26,13 @@ public class WebsocketClientTest {
             @Override
             public void onOpen(ServerHandshake handshakedata) {
                 onOpenOutput.append("Connected to server");
+                System.out.println("open");
             }
 
             @Override
             public void onMessage(String message) {
                 onMessageOutput.append("Received: ").append(message);
+                System.out.println("message");
             }
 
             @Override
