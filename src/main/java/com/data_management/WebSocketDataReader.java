@@ -7,13 +7,18 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.io.IOException;
+import java.util.List;
 
-    public class WebSocketDataReader implements DataReader {
+public class WebSocketDataReader implements DataReader {
         private WebSocketClient client;
+        private int port;
+
+        public WebSocketDataReader(int port){
+            this.port = port;
+        }
 
         @Override
         public void readData(DataStorage dataStorage) throws IOException {
-
         }
 
         @Override
@@ -60,6 +65,20 @@ import java.io.IOException;
                 client.close();
             }
         }
+
+    public static void main(String[] args) throws IOException {
+        int port = 80;
+        WebSocketDataReader webSocketDataReader = new WebSocketDataReader(port);
+        DataStorage dataStorage = new DataStorage();
+        webSocketDataReader.readData_websocket(dataStorage,port);
+        List<PatientRecord> records = dataStorage.getRecords(2, 1700000000000L, 1800000000000L);
+        for (PatientRecord record : records) {
+            System.out.println("Record for Patient ID: " + record.getPatientId() +
+                    ", Type: " + record.getRecordType() +
+                    ", Data: " + record.getMeasurementValue() +
+                    ", Timestamp: " + record.getTimestamp());
+        }
+    }
     }
 
 

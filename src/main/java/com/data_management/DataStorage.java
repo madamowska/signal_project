@@ -84,7 +84,8 @@ public class DataStorage {
      * @param args command line arguments
      */
     public static void main(String[] args) throws IOException {
-        DataReader reader = new OutputFileDataReader("/Users/martaadamowska/signal_project/test");
+        //DataReader reader = new OutputFileDataReader("/Users/martaadamowska/signal_project/test");
+        WebSocketDataReader reader = new WebSocketDataReader(80);
         DataStorage storage = new DataStorage();
 
         reader.readData(storage);

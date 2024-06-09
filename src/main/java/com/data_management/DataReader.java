@@ -15,14 +15,14 @@ public interface DataReader {
     void readData(DataStorage dataStorage) throws IOException;
 
 
-        /**
-         * Connects to a WebSocket server and continuously reads data.
-         *
-         * @param dataStorage the storage where data will be stored
-         * @param port of the WebSocket server
-         * @throws IOException if there is an error reading the data
-         */
-        void readData_websocket(DataStorage dataStorage, int port ) throws IOException;
+    /**
+     * Connects to a WebSocket server and continuously reads data.
+     *
+     * @param dataStorage the storage where data will be stored
+     * @param port of the WebSocket server
+     * @throws IOException if there is an error reading the data
+     */
+    void readData_websocket(DataStorage dataStorage, int port ) throws IOException;
 
 }
 

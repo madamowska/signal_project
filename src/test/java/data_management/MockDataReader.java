@@ -12,7 +12,6 @@ public class MockDataReader implements DataReader {
         storage.addPatientData(1, 100.0, "WhiteBloodCells", 1714376789050L);
         storage.addPatientData(2, 200.0, "WhiteBloodCells", 1714376789051L);
 
-
     }
 
     @Override
