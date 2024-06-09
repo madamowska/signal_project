@@ -94,7 +94,7 @@ public class OutputFileDataReader implements DataReader{
     }
 
 
-    public static void main(String[] args) throws IOException {
+    /*public static void main(String[] args) throws IOException {
         String diretory = "/Users/martaadamowska/signal_project/test";
         OutputFileDataReader outputFileDataReader = new OutputFileDataReader(diretory);
         DataStorage dataStorage = new DataStorage();
@@ -106,7 +106,7 @@ public class OutputFileDataReader implements DataReader{
                     ", Data: " + record.getMeasurementValue() +
                     ", Timestamp: " + record.getTimestamp());
         }
-    }
+    }*/
 
     public void stop(){}
 

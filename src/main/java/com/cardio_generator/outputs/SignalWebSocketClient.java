@@ -69,7 +69,7 @@ public class SignalWebSocketClient extends WebSocketClient  {
         this.close(); // Close the connection
     }
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         try {
             URI serverUri = new URI("ws://localhost:12345");
             SignalWebSocketClient client = new SignalWebSocketClient(serverUri);
@@ -83,7 +83,7 @@ public class SignalWebSocketClient extends WebSocketClient  {
         } catch (URISyntaxException | InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
 
 
